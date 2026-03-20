@@ -1,0 +1,266 @@
+:root {
+  color-scheme: light;
+  --bg: #f4efe6;
+  --panel: rgba(255, 252, 247, 0.88);
+  --panel-border: rgba(95, 75, 45, 0.14);
+  --text: #1f1a16;
+  --muted: #675a4d;
+  --accent: #186a5f;
+  --accent-strong: #0e4e46;
+  --danger: #b44b3f;
+  --shadow: 0 24px 60px rgba(55, 40, 18, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Avenir Next", "Helvetica Neue", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(255, 214, 138, 0.45), transparent 26rem),
+    linear-gradient(180deg, #fbf6ee 0%, var(--bg) 100%);
+}
+
+.app-shell {
+  width: min(1080px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 48px 0 72px;
+}
+
+.hero {
+  padding: 8px 2px 24px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  font-size: 0.88rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2.4rem, 6vw, 4.6rem);
+  line-height: 0.95;
+}
+
+.intro {
+  max-width: 760px;
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
+}
+
+.config-panel,
+.status-panel {
+  padding: 24px;
+}
+
+.speaker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  margin: 18px 0;
+}
+
+.speaker-card {
+  padding: 22px;
+}
+
+.speaker-card.active {
+  border-color: rgba(24, 106, 95, 0.36);
+  box-shadow: 0 24px 60px rgba(24, 106, 95, 0.18);
+}
+
+.speaker-label,
+.speaker-device {
+  margin: 0;
+  color: var(--muted);
+}
+
+.speaker-name {
+  margin: 8px 0;
+  font-size: 1.7rem;
+}
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.panel-head h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+  color: var(--muted);
+}
+
+input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid rgba(95, 75, 45, 0.16);
+  border-radius: 16px;
+  font: inherit;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+button {
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 18px;
+  font: inherit;
+  font-weight: 600;
+  color: white;
+  background: var(--accent);
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--accent-strong);
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.ghost {
+  color: var(--text);
+  background: rgba(31, 26, 22, 0.08);
+}
+
+.ghost:hover {
+  background: rgba(31, 26, 22, 0.14);
+}
+
+.danger {
+  background: var(--danger);
+}
+
+.danger:hover {
+  background: #97392f;
+}
+
+.status-card {
+  margin-top: 18px;
+  padding: 22px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: white;
+  background: #7f8a94;
+}
+
+.badge.running {
+  background: var(--accent);
+}
+
+.badge.starting {
+  background: #d48e1e;
+}
+
+.badge.error {
+  background: var(--danger);
+}
+
+.badge.stopped,
+.badge.idle {
+  background: #7f8a94;
+}
+
+.status-message {
+  margin: 14px 0 0;
+  font-size: 1.15rem;
+}
+
+.status-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin: 18px 0 0;
+}
+
+.status-meta div {
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(244, 239, 230, 0.95);
+}
+
+.status-meta dt {
+  margin: 0 0 6px;
+  font-size: 0.86rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.status-meta dd {
+  margin: 0;
+}
+
+.status-line {
+  min-height: 1.5em;
+  margin: 18px 4px 0;
+  color: var(--muted);
+}
+
+.status-line.error {
+  color: var(--danger);
+}
+
+@media (max-width: 720px) {
+  .app-shell {
+    width: min(100% - 20px, 1080px);
+    padding-top: 28px;
+  }
+
+  .panel-head {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .actions {
+    width: 100%;
+  }
+
+  .actions button,
+  .panel-head > button {
+    width: 100%;
+  }
+}

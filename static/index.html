@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI Stream</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero">
+        <p class="eyebrow">Pi4 Stream auf Pi5</p>
+        <h1>Bluetooth-Ausgabe umschalten</h1>
+        <p class="intro">
+          Die Wiedergabe startet auf dem Pi5 und laeuft dort weiter, auch wenn der Mac geschlossen wird.
+          Nur bei Bluetooth-Abbruch beendet der Pi5 den Stream automatisch.
+        </p>
+      </section>
+
+      <section class="panel config-panel">
+        <div class="panel-head">
+          <h2>Stream</h2>
+          <button id="saveSettingsBtn" class="ghost">URL speichern</button>
+        </div>
+        <label class="field">
+          <span>Pi4 Stream-URL</span>
+          <input id="streamUrl" type="url" placeholder="http://pi4:8000/stream" />
+        </label>
+      </section>
+
+      <section class="speaker-grid" id="speakerGrid"></section>
+
+      <section class="panel status-panel">
+        <div class="panel-head">
+          <h2>Status</h2>
+          <div class="actions">
+            <button id="refreshBtn" class="ghost">Aktualisieren</button>
+            <button id="stopBtn" class="danger">Stop</button>
+          </div>
+        </div>
+        <div class="status-card">
+          <div id="statusBadge" class="badge idle">Idle</div>
+          <p id="statusMessage" class="status-message">Pi5-Status wird geladen.</p>
+          <dl class="status-meta">
+            <div>
+              <dt>Lautsprecher</dt>
+              <dd id="statusSpeaker">-</dd>
+            </div>
+            <div>
+              <dt>Grund</dt>
+              <dd id="statusReason">-</dd>
+            </div>
+            <div>
+              <dt>Aktualisiert</dt>
+              <dd id="statusUpdated">-</dd>
+            </div>
+          </dl>
+        </div>
+        <p id="statusLine" class="status-line"></p>
+      </section>
+    </main>
+
+    <template id="speakerCardTemplate">
+      <article class="panel speaker-card">
+        <p class="speaker-label"></p>
+        <h2 class="speaker-name"></h2>
+        <p class="speaker-device"></p>
+        <button class="play-btn">Auf diesem Lautsprecher starten</button>
+      </article>
+    </template>
+
+    <script src="/app.js" defer></script>
+  </body>
+  </html>
