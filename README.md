@@ -7,7 +7,7 @@ Lokale Steuer-App, die per `ssh pi5` den Pi5 anweist, den Pi4-Stream auf einem d
 
 Die eigentliche Wiedergabe laeuft auf dem Pi5. Deshalb kann der Mac danach geschlossen werden. Nur wenn die Bluetooth-Verbindung am Pi5 abbricht, beendet der Pi5 die Wiedergabe automatisch.
 
-Die aktuelle Implementierung nutzt auf dem Pi5 `BlueALSA` plus `ffmpeg` und verbindet das A2DP-Profil direkt. Damit ist sie unabhaengig von PipeWire/PulseAudio-Bluetooth-Sinks.
+Die aktuelle Implementierung nutzt auf dem Pi5 `BlueALSA` und verbindet das A2DP-Profil direkt. Die Wiedergabe laeuft dabei ueber eine `ffmpeg | aplay`-Pipeline auf das BlueALSA-PCM des gewaehlten Lautsprechers. Damit ist sie unabhaengig von PipeWire/PulseAudio-Bluetooth-Sinks.
 
 ## Start
 
@@ -38,7 +38,7 @@ Beim Start kopiert die App automatisch den Controller auf den Pi5 nach `/home/pi
 - verbindet den ausgewaehlten Bluetooth-Lautsprecher
 - verbindet explizit das A2DP-Audioprofil
 - wartet auf das BlueALSA-PCM des Geraets
-- startet `ffmpeg` mit dem hinterlegten Stream direkt auf dieses Bluetooth-PCM
+- startet den Stream ueber `ffmpeg | aplay` direkt auf dieses Bluetooth-PCM
 - beendet sich bei manuellem Stop oder Bluetooth-Abbruch
 
 ## Voraussetzungen

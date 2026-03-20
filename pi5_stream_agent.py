@@ -7,6 +7,7 @@ import argparse
 import json
 import os
 import signal
+import shlex
 import shutil
 import subprocess
 import sys
@@ -230,36 +231,65 @@ def wait_for_bluealsa_pcm(mac: str, timeout_seconds: int = 20) -> str:
 
 def launch_player(stream_url: str, speaker_mac: str) -> subprocess.Popen[bytes]:
     pcm_name = f"bluealsa:DEV={speaker_mac},PROFILE=a2dp"
-    command = [
-        "ffmpeg",
-        "-hide_banner",
-        "-loglevel",
-        "warning",
-        "-nostdin",
-        "-vn",
-        "-reconnect",
-        "1",
-        "-reconnect_streamed",
-        "1",
-        "-reconnect_delay_max",
-        "5",
-        "-i",
-        stream_url,
-        "-f",
-        "alsa",
-        pcm_name,
-    ]
+    ffmpeg_args = shlex.join(
+        [
+            "ffmpeg",
+            "-hide_banner",
+            "-loglevel",
+            "warning",
+            "-nostdin",
+            "-re",
+            "-reconnect",
+            "1",
+            "-reconnect_streamed",
+            "1",
+            "-reconnect_delay_max",
+            "5",
+            "-i",
+            stream_url,
+            "-vn",
+            "-f",
+            "s16le",
+            "-acodec",
+            "pcm_s16le",
+            "-ac",
+            "2",
+            "-ar",
+            "44100",
+            "-",
+        ]
+    )
+    aplay_args = shlex.join(
+        [
+            "aplay",
+            "-D",
+            pcm_name,
+            "-f",
+            "S16_LE",
+            "-c",
+            "2",
+            "-r",
+            "44100",
+        ]
+    )
+    command = ["bash", "-lc", f"set -o pipefail; {ffmpeg_args} | {aplay_args}"]
     return subprocess.Popen(command, start_new_session=True)
 
 
 def stop_process(process: subprocess.Popen[bytes] | None) -> None:
     if process is None or process.poll() is not None:
         return
-    process.terminate()
+    try:
+        os.killpg(process.pid, signal.SIGTERM)
+    except OSError:
+        process.terminate()
     try:
         process.wait(timeout=8)
     except subprocess.TimeoutExpired:
-        process.kill()
+        try:
+            os.killpg(process.pid, signal.SIGKILL)
+        except OSError:
+            process.kill()
         process.wait(timeout=5)
 
 
